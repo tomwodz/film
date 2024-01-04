@@ -5,10 +5,11 @@ import lombok.Builder;
 @Builder
 public record FilmRequestDto(
         String title,
-        String description,
+        String plot,
         String director,
         String genre,
-        String image
+        String poster,
+        String imdbID
 
 ) {
 }

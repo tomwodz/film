@@ -7,10 +7,11 @@ class FilmMapper {
         return FilmResponseDto.builder()
                 .id(film.getId())
                 .title(film.getTitle())
-                .description(film.getDescription())
+                .plot(film.getPlot())
                 .director(film.getDirector())
                 .genre(film.getGenre())
-                .image(film.getImage())
+                .poster(film.getPoster())
+                .imdbID(film.getImdbID())
                 .build();
     }
 }

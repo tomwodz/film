@@ -10,6 +10,7 @@ import pl.tomwodz.film.domain.film.FilmFacade;
 import pl.tomwodz.film.domain.film.dto.FilmRequestDto;
 import pl.tomwodz.film.domain.film.dto.FilmResponseDto;
 
+
 @RestController
 @AllArgsConstructor
 @RequestMapping(path = "/api/v1/film")
@@ -21,7 +22,6 @@ public class FilmRestController {
     @GetMapping(path = "/{id}")
     public ResponseEntity<FilmResponseDto> findFilmById(@PathVariable Long id){
         return ResponseEntity.ok(this.filmFacade.findFilmById(id));
-
     }
 
     @Operation(description = "Save film", summary = "Save film")
@@ -30,4 +30,17 @@ public class FilmRestController {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(this.filmFacade.saveFilm(filmRequestDto));
     }
+
+    @Operation(description = "Search film by title", summary = "Search film by title")
+    @GetMapping(path = "/search/title/{title}")
+    public ResponseEntity<FilmResponseDto> findFilmByTitle(@PathVariable String title){
+        return ResponseEntity.ok(this.filmFacade.findFilmByTitle(title));
+    }
+
+    @Operation(description = "Search film by imdbID in Database", summary = "Search film by imdbID in Database")
+    @GetMapping(path = "/search/imdbID/{imdbID}")
+    public ResponseEntity<FilmResponseDto> findFilmByImdbIDInDatabase(@PathVariable String imdbID){
+        return ResponseEntity.ok(this.filmFacade.findFilmByImdbIDInDatabase(imdbID));
+    }
+
 }

@@ -1,4 +1,4 @@
-package pl.tomwodz.film.infrastructure.film.apivalidation;
+package pl.tomwodz.film.infrastructure.apivalidation;
 
 
 import lombok.extern.log4j.Log4j2;
@@ -9,25 +9,29 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import pl.tomwodz.film.infrastructure.favourite.controller.FavouriteRestController;
 import pl.tomwodz.film.infrastructure.film.controller.FilmRestController;
+import pl.tomwodz.film.infrastructure.loginandregister.controller.RegisterRestController;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-@ControllerAdvice(assignableTypes = FilmRestController.class)
+@ControllerAdvice(assignableTypes = {FilmRestController.class,
+        FavouriteRestController.class,
+        RegisterRestController.class})
 @Log4j2
 public class ApiValidationErrorHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseBody
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ApiValidationErrorResponseDto handlerValidationException(MethodArgumentNotValidException exception){
-       List<String> message = getErrorsFromException(exception);
-       log.warn("Error" + message);
+    public ApiValidationErrorResponseDto handlerValidationException(MethodArgumentNotValidException exception) {
+        List<String> message = getErrorsFromException(exception);
+        log.warn("Error" + message);
         return new ApiValidationErrorResponseDto(message, HttpStatus.BAD_REQUEST);
     }
 
-    private List<String> getErrorsFromException(MethodArgumentNotValidException exception){
+    private List<String> getErrorsFromException(MethodArgumentNotValidException exception) {
         return exception.getBindingResult()
                 .getAllErrors()
                 .stream()

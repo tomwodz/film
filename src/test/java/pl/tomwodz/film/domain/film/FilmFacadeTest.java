@@ -1,25 +1,28 @@
 package pl.tomwodz.film.domain.film;
 
 import org.junit.jupiter.api.Test;
+import pl.tomwodz.film.domain.client.OMDbClient;
 import pl.tomwodz.film.domain.film.dto.FilmRequestDto;
 import pl.tomwodz.film.domain.film.dto.FilmResponseDto;
 import pl.tomwodz.film.infrastructure.film.error.FilmNotFoundException;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class FilmFacadeTest {
 
     FilmRepository filmRepository = new FilmFacadeTestImpl();
 
-    FilmFacade filmFacade = new FilmConfiguration().filmFacade(filmRepository);
+    OMDbClient omdbClinet = new OMDbClientTestImpl();
+
+    FilmFacade filmFacade = new FilmConfiguration().filmFacade(filmRepository, omdbClinet);
     FilmRequestDto filmRequestDto = FilmRequestDto
     .builder()
             .title("fdsfdsdfsfsd")
-            .description("sdffsdfdsfsd")
+            .plot("sdffsdfdsfsd")
             .director("fdsfsddfs")
             .genre("sdfsdfds")
-            .image("fdsfsddsdfs")
+            .poster("fdsfsddsdfs")
             .build();
 
 
@@ -49,7 +52,7 @@ class FilmFacadeTest {
         //then
         assertThat(filmResponseDtoFounded.id()).isNotNull();
         assertThat(filmResponseDtoFounded.title()).isEqualTo(filmResponseDtoSaved.title());
-        assertThat(filmResponseDtoFounded.description()).isEqualTo(filmResponseDtoSaved.description());
+        assertThat(filmResponseDtoFounded.plot()).isEqualTo(filmResponseDtoSaved.plot());
 
     }
 
