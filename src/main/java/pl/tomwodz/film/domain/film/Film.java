@@ -9,9 +9,9 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name="film")
+@Table(name="films")
 @NoArgsConstructor
-class Film {
+public class Film {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

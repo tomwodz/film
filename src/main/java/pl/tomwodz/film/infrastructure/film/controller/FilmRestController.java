@@ -10,6 +10,7 @@ import pl.tomwodz.film.domain.film.FilmFacade;
 import pl.tomwodz.film.domain.film.dto.FilmRequestDto;
 import pl.tomwodz.film.domain.film.dto.FilmResponseDto;
 
+
 @RestController
 @AllArgsConstructor
 @RequestMapping(path = "/api/v1/film")
@@ -21,7 +22,6 @@ public class FilmRestController {
     @GetMapping(path = "/{id}")
     public ResponseEntity<FilmResponseDto> findFilmById(@PathVariable Long id){
         return ResponseEntity.ok(this.filmFacade.findFilmById(id));
-
     }
 
     @Operation(description = "Save film", summary = "Save film")
@@ -30,4 +30,5 @@ public class FilmRestController {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(this.filmFacade.saveFilm(filmRequestDto));
     }
+
 }

@@ -4,6 +4,8 @@ import pl.tomwodz.film.domain.film.dto.FilmRequestDto;
 
 class FilmFactory {
 
+
+
     Film mapFromFilmRequestDtoToFilm(FilmRequestDto requestDto){
         return new Film(
                 requestDto.title(),
@@ -13,4 +15,5 @@ class FilmFactory {
                 requestDto.image()
         );
     }
+
 }
