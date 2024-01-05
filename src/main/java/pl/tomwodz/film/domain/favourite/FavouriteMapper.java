@@ -18,10 +18,11 @@ class FavouriteMapper {
         return FavouriteFilmResponseDto.builder()
                 .id(film.getId())
                 .title(film.getTitle())
-                .description(film.getDescription())
+                .description(film.getPlot())
                 .director(film.getDirector())
                 .genre(film.getGenre())
-                .image(film.getImage())
+                .image(film.getPoster())
+                .imdbID(film.getImdbID())
                 .build();
     }
     

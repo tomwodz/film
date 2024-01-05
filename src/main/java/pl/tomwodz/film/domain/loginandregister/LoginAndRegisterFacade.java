@@ -1,7 +1,9 @@
 package pl.tomwodz.film.domain.loginandregister;
 
 import lombok.AllArgsConstructor;
+import org.springframework.security.authentication.BadCredentialsException;
 import pl.tomwodz.film.domain.loginandregister.dto.RegistrationResultDto;
+import pl.tomwodz.film.domain.loginandregister.dto.UserDto;
 import pl.tomwodz.film.domain.loginandregister.dto.UserRegisterRequestDto;
 
 @AllArgsConstructor
@@ -20,6 +22,12 @@ public class LoginAndRegisterFacade {
                 .username(userSaved.getUsername())
                 .registered(true)
                 .build();
+    }
+
+    public UserDto findByUsername(String username){
+        return this.userRepository.findByUsername(username)
+                .map(UserMapper::mapFromUserToUserDto)
+                .orElseThrow(() -> new BadCredentialsException("User not found :" + username));
     }
 
     public void save(User user){

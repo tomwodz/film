@@ -1,10 +1,11 @@
 package pl.tomwodz.film.domain.film;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -17,16 +18,23 @@ public class Film {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
-    private String description;
+    private String plot;
     private String director;
     private String genre;
-    private String image;
+    private String poster;
+    private String imdbID;
 
-    public Film(String title, String description, String director, String genre, String image) {
+    private LocalDateTime dateCreation;
+    private LocalDateTime dateLastLikes;
+
+    public Film(String title, String plot, String director, String genre, String poster, String imdbID, LocalDateTime dateCreation, LocalDateTime dateLastLikes) {
         this.title = title;
-        this.description = description;
+        this.plot = plot;
         this.director = director;
         this.genre = genre;
-        this.image = image;
+        this.poster = poster;
+        this.imdbID = imdbID;
+        this.dateCreation = dateCreation;
+        this.dateLastLikes = dateLastLikes;
     }
 }
