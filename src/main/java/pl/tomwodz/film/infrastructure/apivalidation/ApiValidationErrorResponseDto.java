@@ -1,4 +1,4 @@
-package pl.tomwodz.film.infrastructure.film.apivalidation;
+package pl.tomwodz.film.infrastructure.apivalidation;
 
 import org.springframework.http.HttpStatus;
 

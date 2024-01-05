@@ -29,4 +29,8 @@ public class FilmFacadeTestImpl implements FilmRepository {
         return film;
     }
 
+    @Override
+    public Optional<Film> findByImdbID(String imdbID) {
+        return Optional.empty();
+    }
 }

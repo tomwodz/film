@@ -11,6 +11,7 @@ public record FavouriteFilmResponseDto(
         String description,
         String director,
         String genre,
-        String image
+        String image,
+        String imdbID
 ) {
 }

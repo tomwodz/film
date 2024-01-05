@@ -32,17 +32,18 @@ public class FavouriteFacade {
     }
 
     public List<FavouriteFilmResponseDto> addFavouriteFilmForUser(FavouriteFilmRequestDto favouriteFilmRequestDto) {
-        User user = this.userRepository.findById(favouriteFilmRequestDto.idUser())
+        User userToExchange = this.userRepository.findById(favouriteFilmRequestDto.idUser())
                 .orElseThrow(() -> new UserNotFoundException("not found user id:" + favouriteFilmRequestDto.idUser()));
         Set<Integer> setBox = favouriteFilmRequestDto.idFavouriteFilm();
-        Set<Film> setFilmUser = user.getFavouriteFilm();
+        Set<Film> setFilmUser = userToExchange.getFavouriteFilm();
         Set<Film> setFilmToAdd = new HashSet<>();
         setBox.stream()
                 .forEach(n -> setFilmToAdd.add(get(n.longValue())));
         setFilmToAdd.stream()
                 .forEach(f -> setFilmUser.add(f));
-        user.setFavouriteFilm(setFilmUser);
-        List<FavouriteFilmResponseDto> response = favouriteMapper.mapFromSetFavouriteFilmToListFavouriteFilmResponseDto(setFilmToAdd);
+        userToExchange.setFavouriteFilm(setFilmUser);
+        User userSaved = this.userRepository.save(userToExchange);
+        List<FavouriteFilmResponseDto> response = favouriteMapper.mapFromSetFavouriteFilmToListFavouriteFilmResponseDto(userSaved.getFavouriteFilm());
         return response;
     }
 

@@ -1,7 +1,6 @@
 package pl.tomwodz.film.domain.film;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,16 +16,19 @@ public class Film {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
-    private String description;
+    private String plot;
     private String director;
     private String genre;
-    private String image;
+    private String poster;
+    @Column(unique = true)
+    private String imdbID;
 
-    public Film(String title, String description, String director, String genre, String image) {
+    public Film(String title, String plot, String director, String genre, String poster, String imdbID) {
         this.title = title;
-        this.description = description;
+        this.plot = plot;
         this.director = director;
         this.genre = genre;
-        this.image = image;
+        this.poster = poster;
+        this.imdbID = imdbID;
     }
 }

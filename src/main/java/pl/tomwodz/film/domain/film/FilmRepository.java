@@ -11,5 +11,7 @@ public interface FilmRepository extends Repository <Film, Long> {
 
     Film save(Film film);
 
+    Optional<Film> findByImdbID(String imdbID);
+
 
 }

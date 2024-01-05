@@ -23,6 +23,8 @@
         <mysql.version>8.0.33</mysql.version>
         <swagger.version>2.0.2</swagger.version>
         <java-jwt.version>4.0.0</java-jwt.version>
+        <fegin.version>8.18.0</fegin.version>
+        <openfeign.version>4.1.0</openfeign.version>
     </properties>
 
     <dependencies>
@@ -63,6 +65,20 @@
             <groupId>com.auth0</groupId>
             <artifactId>java-jwt</artifactId>
             <version>${java-jwt.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+            <version>${openfeign.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.netflix.feign</groupId>
+            <artifactId>feign-jackson</artifactId>
+            <version>${fegin.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-xml</artifactId>
         </dependency>
     </dependencies>
 
