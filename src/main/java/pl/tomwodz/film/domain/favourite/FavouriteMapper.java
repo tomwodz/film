@@ -22,6 +22,7 @@ class FavouriteMapper {
                 .director(film.getDirector())
                 .genre(film.getGenre())
                 .image(film.getPoster())
+                .imdbID(film.getImdbID())
                 .build();
     }
     

@@ -10,7 +10,9 @@ import pl.tomwodz.film.domain.client.dto.OMDbResponseDto;
 @Component
 public interface OMDbProxy {
 
-    @GetMapping(value = "/?t={title}&apikey=*******")
+    final String API_KEY = "95d3ff54";
+
+    @GetMapping(value = "/?t={title}&apikey="+API_KEY)
     OMDbResponseDto makeGetRequestByTitleFilm(@PathVariable String title);
 
 }

@@ -2,6 +2,7 @@ package pl.tomwodz.film.infrastructure.loginandregister.controller;
 
 
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +23,7 @@ public class RegisterRestController {
 
     @Operation(description = "Register User", summary = "Register User")
     @PostMapping("/register")
-    public ResponseEntity<RegistrationResultDto> register(@RequestBody UserRegisterRequestDto userRegisterRequestDto) {
+    public ResponseEntity<RegistrationResultDto> register(@RequestBody @Valid UserRegisterRequestDto userRegisterRequestDto) {
         String encodedPassword = bCryptPasswordEncoder.encode(userRegisterRequestDto.password());
         RegistrationResultDto registerResult = loginAndRegisterFacade.register(
                 new UserRegisterRequestDto(userRegisterRequestDto.username(), encodedPassword));

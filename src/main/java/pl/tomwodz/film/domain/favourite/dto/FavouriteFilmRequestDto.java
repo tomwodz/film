@@ -6,7 +6,7 @@ import java.util.Set;
 
 @Builder
 public record FavouriteFilmRequestDto(
-        Long idUser,
+        String username,
 
         Set<Integer> idFavouriteFilm
 ) {

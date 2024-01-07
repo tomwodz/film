@@ -19,15 +19,21 @@ public class FavouriteRestController {
     private final FavouriteFacade favouriteFacade;
 
     @Operation(description = "Add favourite Films for User", summary = "Add favourite Films for User")
-    @PostMapping()
+    @PostMapping(path = "/add")
     public ResponseEntity<List<FavouriteFilmResponseDto>> addFavouriteFilmForUser(@RequestBody @Valid FavouriteFilmRequestDto favouriteFilmRequestDto) {
         return ResponseEntity.ok(this.favouriteFacade.addFavouriteFilmForUser(favouriteFilmRequestDto));
     }
 
+    @Operation(description = "Delete favourite Films for User", summary = "Delete favourite Films for User")
+    @DeleteMapping(path = "/delete")
+    public ResponseEntity<List<FavouriteFilmResponseDto>> deleteFavouriteFilmForUser(@RequestBody @Valid FavouriteFilmRequestDto favouriteFilmRequestDto) {
+        return ResponseEntity.ok(this.favouriteFacade.deleteFavouriteFilmForUser(favouriteFilmRequestDto));
+    }
+
     @Operation(description = "Get favourite Films for User", summary = "Get favourite Films for User")
-    @GetMapping(path = "/{idUser}")
-    public ResponseEntity<List<FavouriteFilmResponseDto>> findFavouriteFilmForUser(@PathVariable Long idUser) {
-        return ResponseEntity.ok(this.favouriteFacade.findFavouriteFilmForUser(idUser));
+    @GetMapping(path = "/{username}")
+    public ResponseEntity<List<FavouriteFilmResponseDto>> findFavouriteFilmForUser(@PathVariable String username) {
+        return ResponseEntity.ok(this.favouriteFacade.findFavouriteFilmForUser(username));
     }
 
 }
