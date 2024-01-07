@@ -8,7 +8,7 @@ import pl.tomwodz.film.domain.client.OMDbClient;
 class FilmConfiguration {
 
     @Bean
-    FilmFacade filmFacade(FilmRepository filmRepository, OMDbClient omdbClinet){
+    FilmFacade filmFacade(FilmRepository filmRepository, OMDbClient omdbClinet) {
         FilmFactory filmFactory = new FilmFactory();
         return new FilmFacade(filmRepository, filmFactory, omdbClinet);
     }

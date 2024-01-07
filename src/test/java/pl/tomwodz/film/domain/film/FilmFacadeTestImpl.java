@@ -1,17 +1,16 @@
 package pl.tomwodz.film.domain.film;
 
-import java.util.Map;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class FilmFacadeTestImpl implements FilmRepository {
 
     Random random = new Random();
     Map<Long, Film> inMemoryDatabase = new ConcurrentHashMap<>();
+
     @Override
     public Optional<Film> findById(Long id) {
-        if(inMemoryDatabase.containsKey(id)){
+        if (inMemoryDatabase.containsKey(id)) {
             Film film = inMemoryDatabase.get(id);
             film.setId(id);
             return
@@ -22,8 +21,11 @@ public class FilmFacadeTestImpl implements FilmRepository {
 
     @Override
     public Film save(Film film) {
-        Long id = random.nextLong(1,200000);
-        if(film.getId() != null) id = film.getId();
+        if (existsByImdbID(film.getImdbID())) {
+            return findByImdbID(film.getImdbID()).get();
+        }
+        Long id = random.nextLong(1, 200000);
+        if (film.getId() != null) id = film.getId();
         this.inMemoryDatabase.put(id, film);
         film.setId(id);
         return film;
@@ -31,6 +33,72 @@ public class FilmFacadeTestImpl implements FilmRepository {
 
     @Override
     public Optional<Film> findByImdbID(String imdbID) {
+        List<Long> keys = new ArrayList<>();
+        inMemoryDatabase.entrySet().stream()
+                .forEach(n -> keys.add(n.getKey()));
+        if (keys.stream().
+                filter(n -> inMemoryDatabase.get(n).getImdbID().equals(imdbID))
+                .findFirst()
+                .isPresent()) {
+            Long film = keys.stream().
+                    filter(n -> inMemoryDatabase.get(n).getImdbID().equals(imdbID))
+                    .findFirst().get();
+            return Optional.of(inMemoryDatabase.get(film));
+        }
         return Optional.empty();
+    }
+
+    @Override
+    public boolean existsByImdbID(String imdbID) {
+        List<Long> keys = new ArrayList<>();
+        inMemoryDatabase.entrySet().stream()
+                .forEach(n -> keys.add(n.getKey()));
+        if (keys.stream().
+                filter(n -> inMemoryDatabase.get(n).getImdbID().equals(imdbID))
+                .findFirst()
+                .isPresent()) {
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public List<Film> findAll() {
+        List<Film> films = new ArrayList<>();
+        List<Long> keys = new ArrayList<>();
+        inMemoryDatabase.entrySet().stream()
+                .forEach(n -> keys.add(n.getKey()));
+        keys.stream()
+                .forEach(n -> films.add(inMemoryDatabase.get(n)));
+        return films;
+    }
+
+    @Override
+    public List<Film> findByTitleLike(String title) {
+        List<Film> films = new ArrayList<>();
+        List<Long> keys = new ArrayList<>();
+        inMemoryDatabase.entrySet().stream()
+                .forEach(n -> keys.add(n.getKey()));
+        keys.stream()
+                .filter(n -> inMemoryDatabase.get(n).getTitle().contains("%" + title + "%"))
+                .forEach(n -> films.add(inMemoryDatabase.get(n)));
+        return films;
+    }
+
+    @Override
+    public List<Film> findByDirectorLike(String director) {
+        List<Film> films = new ArrayList<>();
+        List<Long> keys = new ArrayList<>();
+        inMemoryDatabase.entrySet().stream()
+                .forEach(n -> keys.add(n.getKey()));
+        keys.stream()
+                .filter(n -> inMemoryDatabase.get(n).getTitle().contains("%" + director + "%"))
+                .forEach(n -> films.add(inMemoryDatabase.get(n)));
+        return films;
+    }
+
+    @Override
+    public List<Film> findTop10ByOrderByDateLastLikesDesc() {
+        return null;
     }
 }

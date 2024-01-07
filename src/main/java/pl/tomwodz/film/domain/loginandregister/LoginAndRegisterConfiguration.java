@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 class LoginAndRegisterConfiguration {
 
     @Bean
-    LoginAndRegisterFacade loginAndRegisterFacade(UserRepository userRepository){
+    LoginAndRegisterFacade loginAndRegisterFacade(UserRepository userRepository) {
         UserFactory userFactory = new UserFactory();
         return new LoginAndRegisterFacade(userRepository, userFactory);
     }

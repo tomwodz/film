@@ -1,15 +1,19 @@
 package pl.tomwodz.film.domain.film;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @Entity
-@Table(name="films")
+@Table(name = "films")
 @NoArgsConstructor
+@AllArgsConstructor
 public class Film {
 
     @Id
@@ -20,15 +24,19 @@ public class Film {
     private String director;
     private String genre;
     private String poster;
-    @Column(unique = true)
     private String imdbID;
 
-    public Film(String title, String plot, String director, String genre, String poster, String imdbID) {
+    private LocalDateTime dateCreation;
+    private LocalDateTime dateLastLikes;
+
+    public Film(String title, String plot, String director, String genre, String poster, String imdbID, LocalDateTime dateCreation, LocalDateTime dateLastLikes) {
         this.title = title;
         this.plot = plot;
         this.director = director;
         this.genre = genre;
         this.poster = poster;
         this.imdbID = imdbID;
+        this.dateCreation = dateCreation;
+        this.dateLastLikes = dateLastLikes;
     }
 }

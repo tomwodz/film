@@ -7,6 +7,10 @@ public class OMDbClientTestImpl implements OMDbClient {
 
     @Override
     public OMDbResponseDto findFilmByTitle(String title) {
-        return null;
+        return OMDbResponseDto
+                .builder()
+                .Title("Shrek")
+                .Director("Adamson")
+                .build();
     }
 }

@@ -8,13 +8,13 @@ import java.util.Set;
 
 class FavouriteMapper {
 
-    public static List<FavouriteFilmResponseDto> mapFromSetFavouriteFilmToListFavouriteFilmResponseDto(Set<Film> favouriteFilm){
+    public static List<FavouriteFilmResponseDto> mapFromSetFavouriteFilmToListFavouriteFilmResponseDto(Set<Film> favouriteFilm) {
         return favouriteFilm.stream()
                 .map(f -> mapFromFilmToFavouriteFilmResponseDto(f))
                 .toList();
     }
-    
-    public static FavouriteFilmResponseDto mapFromFilmToFavouriteFilmResponseDto(Film film){
+
+    public static FavouriteFilmResponseDto mapFromFilmToFavouriteFilmResponseDto(Film film) {
         return FavouriteFilmResponseDto.builder()
                 .id(film.getId())
                 .title(film.getTitle())
@@ -22,7 +22,8 @@ class FavouriteMapper {
                 .director(film.getDirector())
                 .genre(film.getGenre())
                 .image(film.getPoster())
+                .imdbID(film.getImdbID())
                 .build();
     }
-    
+
 }

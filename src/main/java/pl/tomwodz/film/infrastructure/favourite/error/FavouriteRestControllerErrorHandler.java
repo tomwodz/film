@@ -19,7 +19,7 @@ public class FavouriteRestControllerErrorHandler {
     @ExceptionHandler(UserNotFoundException.class)
     @ResponseBody
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ErrorUserNotFoundResponseDto handleUserNotFound(UserNotFoundException exception){
+    public ErrorUserNotFoundResponseDto handleUserNotFound(UserNotFoundException exception) {
         log.warn("UserNotFoundException error");
         return new ErrorUserNotFoundResponseDto(exception.getMessage(), HttpStatus.NOT_FOUND);
     }
@@ -27,7 +27,7 @@ public class FavouriteRestControllerErrorHandler {
     @ExceptionHandler(FilmNotFoundException.class)
     @ResponseBody
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ErrorFilmResponseDto handleNotFoundException(FilmNotFoundException exception){
+    public ErrorFilmResponseDto handleNotFoundException(FilmNotFoundException exception) {
         log.warn("FilmNotFoundException error");
         return new ErrorFilmResponseDto(exception.getMessage(), HttpStatus.NOT_FOUND);
     }

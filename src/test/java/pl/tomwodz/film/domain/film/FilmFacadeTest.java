@@ -4,7 +4,10 @@ import org.junit.jupiter.api.Test;
 import pl.tomwodz.film.domain.client.OMDbClient;
 import pl.tomwodz.film.domain.film.dto.FilmRequestDto;
 import pl.tomwodz.film.domain.film.dto.FilmResponseDto;
+import pl.tomwodz.film.domain.film.dto.FilmSearchRequestDto;
 import pl.tomwodz.film.infrastructure.film.error.FilmNotFoundException;
+
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -17,17 +20,46 @@ class FilmFacadeTest {
 
     FilmFacade filmFacade = new FilmConfiguration().filmFacade(filmRepository, omdbClinet);
     FilmRequestDto filmRequestDto = FilmRequestDto
-    .builder()
+            .builder()
             .title("fdsfdsdfsfsd")
             .plot("sdffsdfdsfsd")
             .director("fdsfsddfs")
             .genre("sdfsdfds")
             .poster("fdsfsddsdfs")
+            .imdbID("tt123")
+            .build();
+
+    FilmRequestDto filmRequestDto2 = FilmRequestDto
+            .builder()
+            .title("Shrek")
+            .plot("dsfdsfsdfdf")
+            .director("Dame")
+            .genre("gtgttggt")
+            .poster("fsdfdsfsd")
+            .imdbID("tt123")
+            .build();
+
+    FilmRequestDto filmRequestDtoWithEmptyImdbID = FilmRequestDto
+            .builder()
+            .title("fdsfdsdfsfsd")
+            .plot("sdffsdfdsfsd")
+            .director("fdsfsddfs")
+            .genre("sdfsdfds")
+            .poster("fdsfsddsdfs")
+            .imdbID("")
+            .build();
+
+    FilmSearchRequestDto filmSearchRequestDto = FilmSearchRequestDto
+            .builder()
+            .titleSearch(true)
+            .title("Shrek")
+            .directorSearch(true)
+            .director("Adamson")
             .build();
 
 
     @Test
-    void ShouldBeAbleSaveFilm(){
+    void ShouldBeAbleSaveFilm() {
 
         //given
 
@@ -41,7 +73,35 @@ class FilmFacadeTest {
     }
 
     @Test
-    void ShouldBeAbleFindFilmByIdWhenWasSaved(){
+    void ShouldBeAbleSaveFilmWithEmptyImdbID() {
+
+        //given
+
+        //when
+        FilmResponseDto filmResponseDto = this.filmFacade.saveFilm(filmRequestDtoWithEmptyImdbID);
+
+        //then
+        assertThat(filmResponseDto.id()).isNotNull();
+        assertThat(filmResponseDto.title()).isEqualTo(filmRequestDto.title());
+
+    }
+
+    @Test
+    void ShouldBeUnableSaveFilmWithImdbIDExists() {
+
+        //given
+
+        //when
+        FilmResponseDto filmResponseDto = this.filmFacade.saveFilm(filmRequestDto);
+        FilmResponseDto filmResponseDto2 = this.filmFacade.saveFilm(filmRequestDto2);
+
+        //then
+        assertThat(filmResponseDto.title()).isEqualTo(filmResponseDto2.title());
+
+    }
+
+    @Test
+    void ShouldBeAbleFindFilmByIdWhenWasSaved() {
 
         //given
         FilmResponseDto filmResponseDtoSaved = this.filmFacade.saveFilm(filmRequestDto);
@@ -57,12 +117,40 @@ class FilmFacadeTest {
     }
 
     @Test
-    void ShouldThrowNotFoundExceptionWhenFilmNotFound(){
+    void ShouldBeAbleFindFilmsWasSaved() {
+
+        //given
+        this.filmFacade.saveFilm(filmRequestDto);
+        this.filmFacade.saveFilm(filmRequestDtoWithEmptyImdbID);
+
+        //when
+        List<FilmResponseDto> films = this.filmFacade.findAllFilms();
+
+        //then
+        assertThat(films).isNotNull();
+        assertThat(films.size()).isEqualTo(2);
+    }
+
+    @Test
+    void ShouldThrowNotFoundExceptionWhenFilmNotFound() {
 
         //given
         //when
         //then
         assertThrows(FilmNotFoundException.class, () -> this.filmFacade.findFilmById(0L));
+
+    }
+
+    @Test
+    void ShouldBeAbleFindFilmByTitleWhenWasSaved() {
+
+        //given
+        FilmResponseDto filmResponseDtoSaved = this.filmFacade.saveFilm(filmRequestDto);
+
+        //when
+        List<FilmResponseDto> filmResponseDtos = this.filmFacade.searchFilm(filmSearchRequestDto);
+
+        //then
 
     }
 

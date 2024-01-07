@@ -9,7 +9,7 @@ import pl.tomwodz.film.domain.loginandregister.UserRepository;
 public class FavouriteFacadeConfiguration {
 
     @Bean
-    FavouriteFacade favouriteFacade(UserRepository userRepository, FilmRepository filmRepository){
+    FavouriteFacade favouriteFacade(UserRepository userRepository, FilmRepository filmRepository) {
         FavouriteMapper favouriteMapper = new FavouriteMapper();
         return new FavouriteFacade(userRepository, filmRepository, favouriteMapper);
     }
