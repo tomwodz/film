@@ -1,0 +1,28 @@
+{
+  "groups": [
+    {
+      "name": "auth.jwt",
+      "type": "pl.tomwodz.film.infrastructure.security.jwt.JwtConfigurationProperties",
+      "sourceType": "pl.tomwodz.film.infrastructure.security.jwt.JwtConfigurationProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "auth.jwt.expiration-days",
+      "type": "java.lang.Long",
+      "sourceType": "pl.tomwodz.film.infrastructure.security.jwt.JwtConfigurationProperties",
+      "defaultValue": 0
+    },
+    {
+      "name": "auth.jwt.issuer",
+      "type": "java.lang.String",
+      "sourceType": "pl.tomwodz.film.infrastructure.security.jwt.JwtConfigurationProperties"
+    },
+    {
+      "name": "auth.jwt.secret",
+      "type": "java.lang.String",
+      "sourceType": "pl.tomwodz.film.infrastructure.security.jwt.JwtConfigurationProperties"
+    }
+  ],
+  "hints": []
+}
